@@ -1,1 +1,1 @@
-print 'Hello bot'
+print ('Hello bot')
