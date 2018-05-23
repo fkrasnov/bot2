@@ -89,7 +89,7 @@ def tfidf_features(X_train, X_test, vectorizer_path):
     tfidf_vectorizer = TfidfVectorizer(min_df=5,max_df=0.9, ngram_range=(1,2), token_pattern=None, 
                                        tokenizer=nltk.tokenize.casual_tokenize)
     tfidf_vectorizer.fit(np.concatenate((X_train,X_test)))
-#    pickle.dump(tfidf_vectorizer, open(vectorizer_path, 'wb')) 
+    pickle.dump(tfidf_vectorizer, open(vectorizer_path, 'wb')) 
     
     return tfidf_vectorizer.transform(X_train), tfidf_vectorizer.transform(X_test) #X_train, X_test
 
@@ -98,7 +98,7 @@ def tfidf_features(X_train, X_test, vectorizer_path):
 
 # In[6]:
 
-datadir = '../natural-language-processing/project/data/'
+datadir = 'data/'
 sample_size = 200000
 
 dialogue_df = pd.read_csv(datadir+'/dialogues.tsv', sep='\t').sample(sample_size, random_state=0)
@@ -195,7 +195,7 @@ print('Test accuracy = {}'.format(test_accuracy))
 # In[16]:
 
 
-#pickle.dump(intent_recognizer, open(RESOURCE_PATH['INTENT_RECOGNIZER'], 'wb'))
+pickle.dump(intent_recognizer, open(RESOURCE_PATH['INTENT_RECOGNIZER'], 'wb'))
 
 
 # ### Programming language classification 
@@ -260,7 +260,7 @@ print('Test accuracy = {}'.format(test_accuracy))
 # In[23]:
 
 
-#pickle.dump(tag_classifier, open(RESOURCE_PATH['TAG_CLASSIFIER'], 'wb'))
+pickle.dump(tag_classifier, open(RESOURCE_PATH['TAG_CLASSIFIER'], 'wb'))
 
 
 # ## Part II. Ranking  questions with embeddings
@@ -323,8 +323,6 @@ counts_by_tag = posts_df[['tag','post_id']].groupby(['tag',]).count().to_dict()[
 
 # In[37]:
 
-
-posts_df['tag'] = posts_df.tag.map(lambda w: w.replace('c\\c++', 'cpp'))
 
 
 # In[41]:

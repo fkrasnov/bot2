@@ -20,11 +20,11 @@ class ThreadRanker(object):
             The search is performed across the threads with a given tag.
         """
         thread_ids, thread_embeddings = self.__load_embeddings_by_tag(tag_name)
-
+        print len(thread_ids)
         # HINT: you have already implemented a similar routine in the 3rd assignment.
         qvec = question_to_vec(question, self.word_embeddings, self.embeddings_dim) #### YOUR CODE HERE ####
         best_thread = np.argmax(cosine_similarity(qvec.reshape((1,-1)), thread_embeddings)) #### YOUR CODE HERE ####
-        
+        print best_thread
         return thread_ids[best_thread]
 
 
@@ -79,6 +79,7 @@ class DialogueManager(object):
         else:        
             # Pass features to tag_classifier to get predictions.
             tag = self.tag_classifier.predict(features)[0] #### YOUR CODE HERE ####
+            print tag
             # Pass prepared_question to thread_ranker to get predictions.
             thread_id = self.thread_ranker.get_best_thread(prepared_question, tag) #### YOUR CODE HERE ####
            
