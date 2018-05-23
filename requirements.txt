@@ -1,3 +1,6 @@
+ChatterBot
+requests
 numpy
+sklearn
+nltk
 scipy
-keras
