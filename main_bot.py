@@ -55,8 +55,10 @@ def parse_args():
 
 
 def is_unicode(text):
-    return len(text) == len(text.encode())
-
+    try:
+        return len(text) == len(text.encode())
+    except:
+        return False
 
 class SimpleDialogueManager(object):
     """
