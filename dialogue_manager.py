@@ -2,7 +2,7 @@ import os
 from sklearn.metrics.pairwise import pairwise_distances_argmin
 from sklearn.metrics.pairwise import cosine_similarity
 
-#from chatterbot import ChatBot
+from chatterbot import ChatBot
 from utils import *
 
 class ThreadRanker(object):
@@ -41,6 +41,7 @@ class DialogueManager(object):
         # Goal-oriented part:
         self.tag_classifier = unpickle_file(paths['TAG_CLASSIFIER'])
         self.thread_ranker = ThreadRanker(paths)
+        self.create_chitchat_bot()
 
     def create_chitchat_bot(self):
         """Initializes self.chitchat_bot with some conversational model."""
@@ -58,6 +59,7 @@ class DialogueManager(object):
             trainer='chatterbot.trainers.ChatterBotCorpusTrainer'
         )
         chatbot.train("chatterbot.corpus.english")
+        self.chitchat_bot = chatbot
         
     def generate_answer(self, question):
         """Combines stackoverflow and chitchat parts using intent recognition."""
@@ -71,8 +73,9 @@ class DialogueManager(object):
 
         # Chit-chat part:   
         if intent == 'dialogue':
-            # Pass question to chitchat_bot to generate a response.       
-            response = chatbot.get_response(question)  #### YOUR CODE HERE ####
+            # Pass question to chitchat_bot to generate a response.
+            #self.create_chitchat_bot()       
+            response = self.chitchat_bot.get_response(question)  #### YOUR CODE HERE ####
             return response
         
         # Goal-oriented part:
